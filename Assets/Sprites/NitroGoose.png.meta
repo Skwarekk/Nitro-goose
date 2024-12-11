@@ -115,20 +115,20 @@ TextureImporter:
       name: NitroGoose_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 449
-        width: 282
-        height: 72
+        x: 0
+        y: 320
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2471f643cafae0140800000000000000
-      internalID: 4687877416288196418
+      spriteID: 0fcda0ec35db6264493f74f6dc863aa1
+      internalID: -109452614
       vertices: []
       indices: 
       edges: []
@@ -137,20 +137,20 @@ TextureImporter:
       name: NitroGoose_1
       rect:
         serializedVersion: 2
-        x: 339
-        y: 449
-        width: 282
-        height: 72
+        x: 320
+        y: 320
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 1b4f56e49c8612e70800000000000000
-      internalID: 9088660736823391409
+      spriteID: 931cd94708ce36741a1f6850453f03a9
+      internalID: 1526884564
       vertices: []
       indices: 
       edges: []
@@ -159,20 +159,20 @@ TextureImporter:
       name: NitroGoose_2
       rect:
         serializedVersion: 2
-        x: 19
-        y: 139
-        width: 282
-        height: 72
+        x: 0
+        y: 0
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 180a0826dd6581240800000000000000
-      internalID: 4762652114784657537
+      spriteID: 924d6ed60aea1654ea7b38bbf47fac23
+      internalID: -1273969188
       vertices: []
       indices: 
       edges: []
@@ -181,20 +181,20 @@ TextureImporter:
       name: NitroGoose_3
       rect:
         serializedVersion: 2
-        x: 339
-        y: 129
-        width: 282
-        height: 82
+        x: 320
+        y: 0
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cd95e67a6cf120fa0800000000000000
-      internalID: -5836067229045728804
+      spriteID: b084b7da5ced88146a6325dd13b800ed
+      internalID: -1344622427
       vertices: []
       indices: 
       edges: []
@@ -203,20 +203,20 @@ TextureImporter:
       name: NitroGoose_4
       rect:
         serializedVersion: 2
-        x: 659
-        y: 129
-        width: 282
-        height: 72
+        x: 640
+        y: 0
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 101bcd52402102370800000000000000
-      internalID: 8295650322640843009
+      spriteID: 0c60bd89a3f8c194b9d4c6b998d5c74c
+      internalID: -224083940
       vertices: []
       indices: 
       edges: []
@@ -225,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f809202bcb2600240a013062778b2bc4
     internalID: 0
     vertices: []
     indices: 
@@ -234,7 +234,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      NitroGoose_0: -109452614
+      NitroGoose_1: 1526884564
+      NitroGoose_2: -1273969188
+      NitroGoose_3: -1344622427
+      NitroGoose_4: -224083940
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
