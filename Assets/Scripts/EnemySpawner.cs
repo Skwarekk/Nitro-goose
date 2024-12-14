@@ -4,26 +4,48 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private List<EnemySO> enemiesSOList = new List<EnemySO>();
-    [SerializeField] private int whichEnemy;
-    private EnemySO currentEnemy;
+    private EnemySO enemyToSpawn;
     private int unitsForPixel = 100;
     private float halfScreenSize = Screen.width / 2;
+    private GameObject enemyToDestroy;
 
-    private void Start()
+    private void Awake()
     {
-        if(whichEnemy >= 0 && whichEnemy < enemiesSOList.Count)
+        SelectNewEnemy();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            currentEnemy = enemiesSOList[whichEnemy];
+            DeleteEnemy(enemyToDestroy);
+            CreateEnemy(enemyToSpawn);
         }
-        CreateEnemy(currentEnemy);
     }
 
     private void CreateEnemy(EnemySO enemySO)
     {
-        if(currentEnemy != null)
+        if (enemyToSpawn != null)
         {
             Transform enemyPrefab = Instantiate(enemySO.prefab);
+            enemyToDestroy = enemyPrefab.gameObject;
             enemyPrefab.transform.position = GetEnemyStartPositionVector(enemySO.width);
+            enemyPrefab.localPosition = Vector3.zero;
+            SelectNewEnemy();
+        }
+    }
+
+    private void SelectNewEnemy()
+    {
+        int whichEnemy = Random.Range(0, enemiesSOList.Count);
+        enemyToSpawn = enemiesSOList[whichEnemy];
+    }
+
+    private void DeleteEnemy(GameObject enemy)
+    {
+        if (enemy != null)
+        {
+            Destroy(enemy);
         }
     }
 

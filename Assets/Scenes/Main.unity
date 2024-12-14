@@ -151,7 +151,6 @@ MonoBehaviour:
   enemiesSOList:
   - {fileID: 11400000, guid: 9872d4702d3824d44a3f04bd4dd169e7, type: 2}
   - {fileID: 11400000, guid: e172fc8063efdfe498855cef838b8a60, type: 2}
-  whichEnemy: 0
 --- !u!4 &6757501
 Transform:
   m_ObjectHideFlags: 0
