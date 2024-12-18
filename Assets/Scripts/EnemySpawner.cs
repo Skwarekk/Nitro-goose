@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
     {
         float x = (halfScreenWidth / unitsForPixel) + (enemyWidth / unitsForPixel);
         float y = SetEnemyYPosition(whitchLine);
-        Vector3 positionVector = new Vector3 (x, y, 0);
+        Vector3 positionVector = new Vector3 (0, y, 0);
         return positionVector;
     }
 
