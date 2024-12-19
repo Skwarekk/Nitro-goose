@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Plane
   m_EditorClassIdentifier: 
   prefab: {fileID: 3813548473852573689, guid: 9bc51c9de50a04c48a4ead71642b3860, type: 3}
-  width: 320
+  width: 120
