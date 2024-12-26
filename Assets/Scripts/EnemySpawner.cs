@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private List<EnemySO> enemiesSOList = new List<EnemySO>();
-    [SerializeField] [Range(-1, 1)] private int whitchLine;
+    private int whitchLine;
     private EnemySO enemyToSpawn;
     private int unitsForPixel = 100;
     private float halfScreenWidth = Screen.width / 2;
@@ -55,8 +55,8 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 GetEnemyStartPositionVector(float enemyWidth)
     {
         float x = (halfScreenWidth / unitsForPixel) + (enemyWidth / unitsForPixel);
-        float y = SetEnemyYPosition(whitchLine);
-        Vector3 positionVector = new Vector3 (x, y, 0);
+        float y = SetEnemyYPosition(Random.Range(-1, 2));
+        Vector3 positionVector = new Vector3 (0, y, 0);
         return positionVector;
     }
 
