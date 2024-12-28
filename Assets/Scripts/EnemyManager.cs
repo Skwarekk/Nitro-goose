@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private List<EnemySO> enemiesSOList = new List<EnemySO>();
     private List<GameObject> EnemiesInGame = new List<GameObject>();
@@ -11,9 +11,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
+        SelectNewEnemy();
         int numberOfLines = 3;
         lineHeight = Screen.height / numberOfLines;
-        SelectNewEnemy();
     }
 
     private void Update()
@@ -21,22 +21,15 @@ public class EnemySpawner : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             DeleteAllEnemies();
-            CreateGroupOfEnemies(currentEnemySO);
+            CreateGroupOfEnemies();
         }
-    }
 
-    private Transform CreateEnemy(EnemySO enemySO)
-    {
-        if (currentEnemySO != null)
+        foreach (GameObject enemy in EnemiesInGame)
         {
-            Transform enemyPrefab = Instantiate(enemySO.prefab);
-            enemyPrefab.transform.position = GetEnemyStartPositionVector(enemySO.width);
-            EnemiesInGame.Add(enemyPrefab.gameObject);
-            return enemyPrefab;
-        }
-        else
-        {
-            return null;
+            if (enemy != null) 
+            {
+                MoveEnemy(enemy);
+            }
         }
     }
 
@@ -47,10 +40,25 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    private Vector3 GetEnemyStartPositionVector(float enemyWidth)
+    private Transform CreateEnemy()
+    {
+        if (currentEnemySO != null)
+        {
+            Transform enemyPrefab = Instantiate(currentEnemySO.prefab);
+            enemyPrefab.transform.position = GetEnemyStartPositionVector();
+            EnemiesInGame.Add(enemyPrefab.gameObject);
+            return enemyPrefab;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    private Vector3 GetEnemyStartPositionVector()
     {
         int line = Random.Range(-1, 1 + 1);
-        float x = (GameManager.Instance.halfScreenWidth / GameManager.Instance.unitsForPixel) + (enemyWidth / GameManager.Instance.unitsForPixel);
+        float x = (GameManager.Instance.halfScreenWidth / GameManager.Instance.unitsForPixel) + (currentEnemySO.width / GameManager.Instance.unitsForPixel);
         float y = lineHeight / GameManager.Instance.unitsForPixel * line;
         Vector3 positionVector = new Vector3(0, y, 0);
         return positionVector;
@@ -59,6 +67,26 @@ public class EnemySpawner : MonoBehaviour
     private float GetEnemyYPositionLine(GameObject enemy)
     {
         return (enemy.transform.position.y * GameManager.Instance.unitsForPixel) / lineHeight;
+    }
+
+    private void CreateGroupOfEnemies()
+    {
+        SelectNewEnemy();
+        GameObject firstEnemy, secondEnemy;
+        while (true)
+        {
+            firstEnemy = CreateEnemy().gameObject;
+            secondEnemy = CreateEnemy().gameObject;
+            if (GetEnemyYPositionLine(firstEnemy) != GetEnemyYPositionLine(secondEnemy))
+            {
+                break;
+            }
+            else
+            {
+                Destroy(firstEnemy);
+                Destroy(secondEnemy);
+            }
+        }
     }
 
     private void DeleteAllEnemies()
@@ -70,23 +98,8 @@ public class EnemySpawner : MonoBehaviour
         EnemiesInGame.Clear();
     }
 
-    private void CreateGroupOfEnemies(EnemySO enemySO)
+    private void MoveEnemy(GameObject enemy)
     {
-        GameObject firstEnemy, secondEnemy;
-        while (true)
-        {
-            firstEnemy = CreateEnemy(enemySO).gameObject;
-            secondEnemy = CreateEnemy(enemySO).gameObject;
-            if (GetEnemyYPositionLine(firstEnemy) != GetEnemyYPositionLine(secondEnemy))
-            {
-                break;
-            }
-            else
-            {
-                Destroy(firstEnemy);
-                Destroy(secondEnemy);
-            }
-        }
-        SelectNewEnemy();
+        enemy.transform.position -= new Vector3(currentEnemySO.speed * Time.deltaTime, 0, 0);
     }
 }
