@@ -18,9 +18,9 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
+        List<GameObject> enemiesToDestroy = new List<GameObject>();
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            DeleteAllEnemies();
             CreateGroupOfEnemies();
         }
 
@@ -29,7 +29,18 @@ public class EnemyManager : MonoBehaviour
             if (enemy != null) 
             {
                 MoveEnemy(enemy);
+
+                if (enemy.transform.position.x < -((GameManager.Instance.halfScreenWidth + currentEnemySO.width) / GameManager.Instance.unitsForPixel))
+                {
+                    enemiesToDestroy.Add(enemy);
+                }
             }
+        }
+
+        foreach(GameObject enemy in enemiesToDestroy)
+        {
+            Destroy(enemy);
+            EnemiesInGame.Remove(enemy);
         }
     }
 
@@ -60,7 +71,7 @@ public class EnemyManager : MonoBehaviour
         int line = Random.Range(-1, 1 + 1);
         float x = (GameManager.Instance.halfScreenWidth / GameManager.Instance.unitsForPixel) + (currentEnemySO.width / GameManager.Instance.unitsForPixel);
         float y = lineHeight / GameManager.Instance.unitsForPixel * line;
-        Vector3 positionVector = new Vector3(0, y, 0);
+        Vector3 positionVector = new Vector3(x, y, 0);
         return positionVector;
     }
 
