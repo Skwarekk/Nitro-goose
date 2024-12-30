@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitsForPixel: 100
-  halfScreenWidth: 960
 --- !u!4 &339621202
 Transform:
   m_ObjectHideFlags: 0
@@ -159,7 +158,7 @@ Transform:
   m_GameObject: {fileID: 339621200}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.2178183, y: -0.8615339, z: -0.016980626}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -194,9 +193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225cb003052acce46a11e83dd4b4222c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesSOList:
-  - {fileID: 11400000, guid: 9872d4702d3824d44a3f04bd4dd169e7, type: 2}
-  - {fileID: 11400000, guid: e172fc8063efdfe498855cef838b8a60, type: 2}
+  enemyPrefabsList:
+  - {fileID: 8264593159914091590, guid: 52144714256fa0b4b83498f408e9902e, type: 3}
+  - {fileID: 3813548473852573689, guid: 9bc51c9de50a04c48a4ead71642b3860, type: 3}
+  speed: 10
 --- !u!4 &377284715
 Transform:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 377284713}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7877736, y: -7.153387, z: -0.18625169}
+  m_LocalPosition: {x: 12, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

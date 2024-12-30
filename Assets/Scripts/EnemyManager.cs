@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private List<EnemySO> enemiesSOList = new List<EnemySO>();
+    [SerializeField] private List<Transform> enemyPrefabsList = new List<Transform>();
+    [SerializeField] private float speed = 10;
     private List<GameObject> EnemiesInGame = new List<GameObject>();
     private int whitchLine;
-    private EnemySO currentEnemySO;
+    private Transform currentEnemyPrefab;
     private float lineHeight;
 
     private void Awake()
     {
-        SelectNewEnemy();
         int numberOfLines = 3;
         lineHeight = Screen.height / numberOfLines;
     }
@@ -19,43 +19,39 @@ public class EnemyManager : MonoBehaviour
     private void Update()
     {
         List<GameObject> enemiesToDestroy = new List<GameObject>();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateGroupOfEnemies();
-        }
-
         foreach (GameObject enemy in EnemiesInGame)
         {
-            if (enemy != null) 
+            if(enemy != null)
             {
                 MoveEnemy(enemy);
 
-                if (enemy.transform.position.x < -((GameManager.Instance.halfScreenWidth + currentEnemySO.width) / GameManager.Instance.unitsForPixel))
+                if (enemy.transform.position.x < -transform.position.x)
                 {
                     enemiesToDestroy.Add(enemy);
                 }
             }
         }
 
-        foreach(GameObject enemy in enemiesToDestroy)
+        foreach (GameObject enemyToDestroy in enemiesToDestroy)
         {
-            Destroy(enemy);
-            EnemiesInGame.Remove(enemy);
+            Destroy(enemyToDestroy);
+            EnemiesInGame.Remove(enemyToDestroy);
         }
     }
 
     private void SelectNewEnemy()
     {
-        int whichEnemy = Random.Range(0, enemiesSOList.Count);
-        currentEnemySO = enemiesSOList[whichEnemy];
+        int whichEnemy = Random.Range(0, enemyPrefabsList.Count);
+        currentEnemyPrefab = enemyPrefabsList[whichEnemy];
 
     }
 
     private Transform CreateEnemy()
     {
-        if (currentEnemySO != null)
+        SelectNewEnemy();
+        if (currentEnemyPrefab != null)
         {
-            Transform enemyPrefab = Instantiate(currentEnemySO.prefab);
+            Transform enemyPrefab = Instantiate(currentEnemyPrefab);
             enemyPrefab.transform.position = GetEnemyStartPositionVector();
             EnemiesInGame.Add(enemyPrefab.gameObject);
             return enemyPrefab;
@@ -69,7 +65,7 @@ public class EnemyManager : MonoBehaviour
     private Vector3 GetEnemyStartPositionVector()
     {
         int line = Random.Range(-1, 1 + 1);
-        float x = (GameManager.Instance.halfScreenWidth / GameManager.Instance.unitsForPixel) + (currentEnemySO.width / GameManager.Instance.unitsForPixel);
+        float x = transform.position.x;
         float y = lineHeight / GameManager.Instance.unitsForPixel * line;
         Vector3 positionVector = new Vector3(x, y, 0);
         return positionVector;
@@ -82,11 +78,10 @@ public class EnemyManager : MonoBehaviour
 
     private void CreateGroupOfEnemies()
     {
-        SelectNewEnemy();
         GameObject firstEnemy, secondEnemy;
+        firstEnemy = CreateEnemy().gameObject;
         while (true)
         {
-            firstEnemy = CreateEnemy().gameObject;
             secondEnemy = CreateEnemy().gameObject;
             if (GetEnemyYPositionLine(firstEnemy) != GetEnemyYPositionLine(secondEnemy))
             {
@@ -94,7 +89,6 @@ public class EnemyManager : MonoBehaviour
             }
             else
             {
-                Destroy(firstEnemy);
                 Destroy(secondEnemy);
             }
         }
@@ -111,6 +105,9 @@ public class EnemyManager : MonoBehaviour
 
     private void MoveEnemy(GameObject enemy)
     {
-        enemy.transform.position -= new Vector3(currentEnemySO.speed * Time.deltaTime, 0, 0);
+        if (enemy != null)
+        {
+            enemy.transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
+        }
     }
 }
