@@ -5,6 +5,7 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private List<Transform> enemyPrefabsList = new List<Transform>();
     [SerializeField] private float speed = 10;
+    [SerializeField][Range(1.0f, 2.0f)] private float enemySpawnInterval = 1.5f;
     private List<GameObject> EnemiesInGame = new List<GameObject>();
     private int whitchLine;
     private Transform currentEnemyPrefab;
@@ -37,6 +38,29 @@ public class EnemyManager : MonoBehaviour
             Destroy(enemyToDestroy);
             EnemiesInGame.Remove(enemyToDestroy);
         }
+    }
+
+    public void CreateGroupOfEnemies()
+    {
+        GameObject firstEnemy, secondEnemy;
+        firstEnemy = CreateEnemy().gameObject;
+        while (true)
+        {
+            secondEnemy = CreateEnemy().gameObject;
+            if (GetEnemyYPositionLine(firstEnemy) != GetEnemyYPositionLine(secondEnemy))
+            {
+                break;
+            }
+            else
+            {
+                Destroy(secondEnemy);
+            }
+        }
+    }
+
+    public float GetEnemySpawnInterval()
+    {
+        return enemySpawnInterval;
     }
 
     private void SelectNewEnemy()
@@ -74,24 +98,6 @@ public class EnemyManager : MonoBehaviour
     private float GetEnemyYPositionLine(GameObject enemy)
     {
         return (enemy.transform.position.y * GameManager.Instance.unitsForPixel) / lineHeight;
-    }
-
-    private void CreateGroupOfEnemies()
-    {
-        GameObject firstEnemy, secondEnemy;
-        firstEnemy = CreateEnemy().gameObject;
-        while (true)
-        {
-            secondEnemy = CreateEnemy().gameObject;
-            if (GetEnemyYPositionLine(firstEnemy) != GetEnemyYPositionLine(secondEnemy))
-            {
-                break;
-            }
-            else
-            {
-                Destroy(secondEnemy);
-            }
-        }
     }
 
     private void DeleteAllEnemies()
