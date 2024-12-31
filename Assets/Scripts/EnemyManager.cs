@@ -6,7 +6,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private List<Transform> enemyPrefabsList = new List<Transform>();
     [SerializeField] private float speed = 10;
     [SerializeField][Range(1.0f, 2.0f)] private float enemySpawnInterval = 1.5f;
-    private List<GameObject> EnemiesInGame = new List<GameObject>();
+    private List<GameObject> enemiesInGame = new List<GameObject>();
     private int whitchLine;
     private Transform currentEnemyPrefab;
     private float lineHeight;
@@ -20,9 +20,9 @@ public class EnemyManager : MonoBehaviour
     private void Update()
     {
         List<GameObject> enemiesToDestroy = new List<GameObject>();
-        foreach (GameObject enemy in EnemiesInGame)
+        foreach (GameObject enemy in enemiesInGame)
         {
-            if(enemy != null)
+            if (enemy != null)
             {
                 MoveEnemy(enemy);
 
@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
         foreach (GameObject enemyToDestroy in enemiesToDestroy)
         {
             Destroy(enemyToDestroy);
-            EnemiesInGame.Remove(enemyToDestroy);
+            enemiesInGame.Remove(enemyToDestroy);
         }
     }
 
@@ -77,7 +77,8 @@ public class EnemyManager : MonoBehaviour
         {
             Transform enemyPrefab = Instantiate(currentEnemyPrefab);
             enemyPrefab.transform.position = GetEnemyStartPositionVector();
-            EnemiesInGame.Add(enemyPrefab.gameObject);
+            AddColider(enemyPrefab.gameObject);
+            enemiesInGame.Add(enemyPrefab.gameObject);
             return enemyPrefab;
         }
         else
@@ -102,11 +103,11 @@ public class EnemyManager : MonoBehaviour
 
     private void DeleteAllEnemies()
     {
-        foreach (GameObject enemy in EnemiesInGame)
+        foreach (GameObject enemy in enemiesInGame)
         {
             Destroy(enemy);
         }
-        EnemiesInGame.Clear();
+        enemiesInGame.Clear();
     }
 
     private void MoveEnemy(GameObject enemy)
@@ -115,5 +116,13 @@ public class EnemyManager : MonoBehaviour
         {
             enemy.transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
         }
+    }
+
+    private void AddColider(GameObject enemy)
+    {
+        float enemySize = 4;
+        BoxCollider2D collider = enemy.AddComponent<BoxCollider2D>(); 
+        collider.size = new Vector2(enemySize, lineHeight / GameManager.Instance.unitsForPixel);
+        collider.isTrigger = true;
     }
 }
