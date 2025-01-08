@@ -195,9 +195,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225cb003052acce46a11e83dd4b4222c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefabsList:
+  enemyPrefabsArray:
   - {fileID: 8264593159914091590, guid: 52144714256fa0b4b83498f408e9902e, type: 3}
   - {fileID: 3813548473852573689, guid: 9bc51c9de50a04c48a4ead71642b3860, type: 3}
+  - {fileID: 7528167698983385295, guid: 33809f1a1ba3b39419238494cdf6a6e3, type: 3}
+  - {fileID: 2828622042789065143, guid: 5e4c4715b8433a148b51675e6cad007f, type: 3}
   speed: 10
   enemySpawnInterval: 1.5
   howMuchEnemies: 3
@@ -789,7 +791,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1460826239}
   m_Father: {fileID: 0}
@@ -809,7 +811,8 @@ MonoBehaviour:
   gameInput: {fileID: 439402120}
   playerSpeed: 12
   playerBackwardDrag: 0.8
-  playerSize: {x: 1, y: 1}
+  playerSize: 0.7
+  playerColliderSize: {x: 1, y: 2.5}
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 64

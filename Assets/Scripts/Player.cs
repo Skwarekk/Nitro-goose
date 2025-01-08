@@ -5,8 +5,18 @@ public class Player : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private float playerSpeed;
     [SerializeField] private float playerBackwardDrag;
-    [SerializeField] private Vector2 playerSize;
+    [SerializeField] private float playerSize;
+    [Space]
+    [Header("Collision settings")]
+    [Space]
+    [SerializeField] private Vector2 playerColliderSize;
     [SerializeField] private LayerMask wallsLayerMask;
+
+    private void Awake()
+    {
+        transform.localScale = new Vector3(playerSize, playerSize, playerSize);
+    }
+
     private void Update()
     {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
@@ -18,7 +28,7 @@ public class Player : MonoBehaviour
         {
             correctSpeed = correctSpeed * playerBackwardDrag; 
         }
-        if (!Physics2D.BoxCast(origin, playerSize, 0f, moveDir, playerSpeed * Time.deltaTime, wallsLayerMask))
+        if (!Physics2D.BoxCast(origin, playerColliderSize, 0f, moveDir, playerSpeed * Time.deltaTime, wallsLayerMask))
         {
             transform.position += moveDir * correctSpeed * Time.deltaTime;
         }
