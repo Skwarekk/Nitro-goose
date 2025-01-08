@@ -812,7 +812,7 @@ MonoBehaviour:
   playerSpeed: 12
   playerBackwardDrag: 0.8
   playerSize: 0.7
-  playerColliderSize: {x: 1, y: 2.5}
+  playerColliderSize: {x: 2, y: 0.7}
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 64
