@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private List<Transform> enemyPrefabsList = new List<Transform>();
+    [SerializeField] private Transform[] enemyPrefabsArray;
     [SerializeField] private float speed = 10;
     [SerializeField][Range(1.0f, 2.0f)] private float enemySpawnInterval = 1.5f;
+    [SerializeField][Range(1, 4)] private int howMuchEnemies;
+    [SerializeField][Range(0.5f, 1f)] private float enemySize = 0.7f;
     private List<GameObject> enemiesInGame = new List<GameObject>();
     private int whitchLine;
     private Transform currentEnemyPrefab;
@@ -13,7 +15,9 @@ public class EnemyManager : MonoBehaviour
 
     private void Awake()
     {
-        int numberOfLines = 3;
+        enemySize = 0.7f;
+
+        int numberOfLines = 5;
         lineHeight = Screen.height / numberOfLines;
     }
 
@@ -42,18 +46,22 @@ public class EnemyManager : MonoBehaviour
 
     public void CreateGroupOfEnemies()
     {
-        GameObject firstEnemy, secondEnemy;
-        firstEnemy = CreateEnemy().gameObject;
-        while (true)
+        List<float> takenLines = new List<float>();
+        for (int i = 1; i <= howMuchEnemies; i++)
         {
-            secondEnemy = CreateEnemy().gameObject;
-            if (GetEnemyYPositionLine(firstEnemy) != GetEnemyYPositionLine(secondEnemy))
-            {
-                break;
-            }
-            else
-            {
-                Destroy(secondEnemy);
+            SelectNewEnemy();
+            while (true)
+            {    
+                GameObject enemy = CreateEnemy().gameObject;
+                if (!takenLines.Contains(GetEnemyYPositionLine(enemy)))
+                {
+                    takenLines.Add(GetEnemyYPositionLine(enemy));
+                    break;
+                }
+                else
+                {
+                    Destroy(enemy);
+                }
             }
         }
     }
@@ -65,19 +73,19 @@ public class EnemyManager : MonoBehaviour
 
     private void SelectNewEnemy()
     {
-        int whichEnemy = Random.Range(0, enemyPrefabsList.Count);
-        currentEnemyPrefab = enemyPrefabsList[whichEnemy];
+        int whichEnemy = Random.Range(0, enemyPrefabsArray.Length);
+        currentEnemyPrefab = enemyPrefabsArray[whichEnemy];
 
     }
 
     private Transform CreateEnemy()
     {
-        SelectNewEnemy();
         if (currentEnemyPrefab != null)
         {
             Transform enemyPrefab = Instantiate(currentEnemyPrefab);
             enemyPrefab.transform.position = GetEnemyStartPositionVector();
             AddColider(enemyPrefab.gameObject);
+            SetSize(enemyPrefab.gameObject);
             enemiesInGame.Add(enemyPrefab.gameObject);
             return enemyPrefab;
         }
@@ -89,7 +97,7 @@ public class EnemyManager : MonoBehaviour
 
     private Vector3 GetEnemyStartPositionVector()
     {
-        int line = Random.Range(-1, 1 + 1);
+        int line = Random.Range(-2, 2 + 1);
         float x = transform.position.x;
         float y = lineHeight / GameManager.Instance.unitsForPixel * line;
         Vector3 positionVector = new Vector3(x, y, 0);
@@ -124,5 +132,10 @@ public class EnemyManager : MonoBehaviour
         BoxCollider2D collider = enemy.AddComponent<BoxCollider2D>(); 
         collider.size = new Vector2(enemySize, lineHeight / GameManager.Instance.unitsForPixel);
         collider.isTrigger = true;
+    }
+
+    private void SetSize(GameObject enemy)
+    {
+        enemy.transform.localScale = new Vector3(enemySize, enemySize, enemySize);
     }
 }
